@@ -30,6 +30,8 @@ homework-error-review/
 ├── assets/
 │   ├── template.html        # full CSS + page skeleton + subject add-ons
 │   └── fonts/               # created by setup_env.py (downloaded once, never OS-installed)
+├── tests/
+│   └── selftest.py          # one-command install verification (any platform)
 └── scripts/                 # all cross-platform (Windows: python/py; mac/linux: python3)
     ├── setup_env.py         # fonts download + dependency/browser checks + per-OS hints
     ├── convert_images.py    # HEIC→JPG (Pillow+pillow-heif, ImageMagick fallback)
@@ -82,8 +84,8 @@ for Chromium's `file://` font CORS block, and it makes output identical on every
 Self-test after install (Windows: `python`/`py`; macOS/Linux: `python3`):
 
 ```bash
-python3 scripts/setup_env.py                     # fonts + deps + browser check
-python3 scripts/make_pdf.py assets/template.html --output /tmp/t.pdf
+python3 scripts/setup_env.py       # first use: fonts + deps + browser check
+python3 tests/selftest.py          # verify: deps, fonts, renderer, full build + QA gate
 ```
 
 ## Memory file (knowledge points across sessions)

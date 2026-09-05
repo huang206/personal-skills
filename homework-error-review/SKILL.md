@@ -49,6 +49,15 @@ The HTML→PDF template and scripts are bundled in this skill — no external pl
 `$HER_MEMORY`; see `references/memory-protocol.md`): know what the child has
 studied and missed before — background only, it must not alter booklet content.
 
+**Subject confirmation gate (mandatory first).** Before analyzing anything in
+bulk, look at ONE representative page and declare: subject (math / language arts /
+science / …), textbook or worksheet family, grade level, and the evidence you see
+(printed headers, question style, e.g. "Wonders grammar page — sentence-combining
+exercise"). If this contradicts what the user said or what you assumed, STOP and
+confirm with the user before running the full analysis — a wrong subject assumption
+silently corrupts every later phase (a grammar worksheet was once fully
+misread as multiplication homework).
+
 Confirm from the user's message and the images: subject, grade level, source
 (textbook/worksheet name if visible), visible score. Note the child's school language
 for the original questions (usually English) — keep original question text verbatim
@@ -122,6 +131,12 @@ Read `references/content-design.md` for full rules. In brief:
    BEFORE writing the answer key. **Hard rule: practice targets ONLY this session's
    errors — never add items from past weak points unless the user explicitly asks
    for review/history.**
+5. **Dedup against past practice (the one permitted memory read at generation
+   time).** Before finalizing the practice set, scan the session log's "Practice
+   items used" lines in the memory file: you may test the SAME skills again, but
+   with fresh numbers/sentences — never reuse a parameter set the child has
+   already seen (e.g. if 6 × 37 and 9 × 45 appeared before, pick 6 × 39 and
+   9 × 54 now). This check only swaps parameters; it never adds or removes topics.
 
 ### Phase 4 — Build the HTML
 
@@ -160,13 +175,22 @@ and eyeball page 1–2 for layout collisions if the harness has vision.
 ### Phase 6 — Deliver & remember
 
 **Update the memory file BEFORE reporting to the user** (protocol:
-`references/memory-protocol.md`): append the session log entry (error table, root
-causes, metaphor used) and update the Mastery Overview rows for this session's
-knowledge points. Memory records only — it must not have influenced the booklet.
+`references/memory-protocol.md`): append the session log entry — including the
+"Practice items used" line with each item's key parameters (needed for future
+dedup) — and update the Mastery Overview rows for this session's knowledge points.
+Memory records only — it must not have influenced the booklet (dedup parameter
+swaps are the sole exception, per Phase 3 rule 5).
 
 Give the user: the PDF path, the editable HTML path, the confirmed error table
-(the one from Phase 2), and a one-paragraph pattern summary. Offer a follow-up
-variant worksheet if the child misses practice items later.
+(the one from Phase 2), and a one-paragraph pattern summary. **Always end the
+delivery message with the backfill invitation** (adapt wording, keep the ask):
+
+> 做完后告诉我错了几题/哪几题（例如"错了第 3、7 题"），我会更新学习档案，
+> 下次的练习会自动避开出过的题目、换新的数字。
+
+When the user later reports results: backfill that session's Practice line
+(e.g. "10 items, 8 correct, missed #3 #7"), adjust Status per the protocol, and
+offer the targeted variant worksheet for whatever was missed.
 
 ## Files in this skill
 

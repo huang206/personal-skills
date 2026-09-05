@@ -33,7 +33,10 @@ Maintained automatically by homework-error-review. Last updated: YYYY-MM-DD.
 - Root cause: <the named pattern(s), one line each>
 - What went right: <strengths, one line>
 - Metaphor used: <e.g. "KEEP-LOOK-CHANGE chant"> (note if it seemed to help)
-- Practice: <N items generated; scores to be backfilled if user reports later>
+- Practice items used: <each generated item's key parameters, compact —
+  e.g. "6×37, 5×68, 3×79, 7×56; MC: which rounds to 7,000 (6,530); greatest→8,499;
+  find-mistake: 5×47=255"> (REQUIRED — feeds future dedup)
+- Practice: <N items generated; scores backfilled when the user reports>
 ```
 
 ## When to read
@@ -72,6 +75,25 @@ session's Practice line and adjust Status accordingly.
 - **No automatic trend commentary.** The parent page does not get a
   "compared to last time" note unless the user asks.
 - Memory contents are never shown to the child.
+
+**Sole permitted generation-time use: the dedup check.** When designing practice
+(Phase 3), you MAY read past "Practice items used" lines to avoid reusing a
+parameter set the child has already seen — same skills, fresh numbers/sentences.
+This check only swaps parameters; it never adds topics, items, or commentary.
+
+## Score backfill (the loop that keeps statuses honest)
+
+The delivery message always ends with an invitation to report results (see
+SKILL.md Phase 6). When the user replies with results:
+
+1. Find the most recent matching session entry; rewrite its `Practice:` line with
+   the outcome (e.g. "12 items, 9 correct — missed #4, #11").
+2. Update the Mastery Overview rows for the knowledge points those missed items
+   test: increment `Misses` if the pattern repeated, advance `Status`
+   (new → improving) if most items were correct, and only set `mastered` when the
+   user reports full success on that point.
+3. Offer (do not auto-generate) a small variant worksheet for the missed patterns,
+   with fresh parameters per the dedup rule.
 
 ## When the user DOES ask for review/history
 
