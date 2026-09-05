@@ -1,4 +1,4 @@
-# homework-error-review
+# homework-review
 
 Give it photos of a child's graded homework or test → get a polished, kid-friendly
 PDF: error analysis, knowledge-point explanations with worked examples for every
@@ -19,7 +19,7 @@ browser — on Windows that means Edge, which ships with the OS.
 ## What's inside
 
 ```
-homework-error-review/
+homework-review/
 ├── SKILL.md                 # 6-phase workflow (the entry point for any LLM)
 ├── README.md                # this file
 ├── references/
@@ -49,7 +49,7 @@ homework-error-review/
 |---|---|
 | All | Unzip into `~/.agents/skills/` (user scope, all projects) or `<project>/.zcode/skills/` (project override). ZCode and Claude Code discover both. |
 
-On Windows, `tar -xf homework-error-review.zip -C "%USERPROFILE%\.agents\skills\"`
+On Windows, `tar -xf homework-review.zip -C "%USERPROFILE%\.agents\skills\"`
 (Windows 10 1803+ ships `tar`, which reads zip) or use Explorer.
 
 ### CherryStudio (no native SKILL.md support)
@@ -59,7 +59,7 @@ On Windows, `tar -xf homework-error-review.zip -C "%USERPROFILE%\.agents\skills\
    call scripts and read the template; or
 2. **Knowledge base**: add this folder as a knowledge source and instruct the
    agent: "When the user sends graded homework photos, follow
-   homework-error-review/SKILL.md."
+   homework-review/SKILL.md."
 
 Works the same on Windows/macOS/Linux — the model only needs to emit the commands;
 the scripts run locally.
@@ -90,7 +90,7 @@ python3 tests/selftest.py          # verify: deps, fonts, renderer, full build +
 
 ## Memory file (knowledge points across sessions)
 
-- Location: `~/.homework-error-review/memory.md` (override with the `HER_MEMORY`
+- Location: `~/.homework-review/memory.md` (override with the `HR_MEMORY`
   environment variable). Survives skill upgrades; back it up by copying that one file.
 - After every booklet: session log entry + mastery table update
   (knowledge point / status new→improving→mastered / miss count / error pattern).

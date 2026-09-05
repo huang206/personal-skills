@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""setup_env.py — cross-platform first-use setup for homework-error-review.
+"""setup_env.py — cross-platform first-use setup for homework-review.
 
 Windows / macOS / Ubuntu. Checks and prepares:
   1. Fonts: downloads Noto Sans SC 400/700/900 TTFs into <skill>/assets/fonts/
@@ -194,7 +194,7 @@ def check_renderer():
 
 
 def main():
-    print(f"homework-error-review setup — {sys.platform}")
+    print(f"homework-review setup — {sys.platform}")
     setup_fonts()
     check_python_deps()
     check_renderer()

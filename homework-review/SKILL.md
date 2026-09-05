@@ -1,5 +1,5 @@
 ---
-name: homework-error-review
+name: homework-review
 description: >-
   Analyze graded homework/test photos (with teacher markings) to find wrong answers,
   extract knowledge points, and generate a kid-friendly explanation + practice workbook
@@ -11,7 +11,7 @@ description: >-
   parent summary page.
 ---
 
-# Homework Error Review — graded work → explanation + practice PDF
+# Homework Review — graded work → explanation + practice PDF
 
 You are given photos of a child's graded homework or test. Your job: identify every
 wrong answer, extract the knowledge points being tested, and produce ONE polished PDF:
@@ -45,8 +45,8 @@ The HTML→PDF template and scripts are bundled in this skill — no external pl
 
 ### Phase 0 — Intake
 
-**Read the memory file first** (default `~/.homework-error-review/memory.md`, or
-`$HER_MEMORY`; see `references/memory-protocol.md`): know what the child has
+**Read the memory file first** (default `~/.homework-review/memory.md`, or
+`$HR_MEMORY`; see `references/memory-protocol.md`): know what the child has
 studied and missed before — background only, it must not alter booklet content.
 
 **Subject confirmation gate (mandatory first).** Before analyzing anything in

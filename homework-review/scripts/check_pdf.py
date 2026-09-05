@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""check_pdf.py — QA gate for homework-error-review booklets.
+"""check_pdf.py — QA gate for homework-review booklets.
 
 Checks:
   1. Page count + per-page fill ratio (bottom-most non-white pixel; pages should

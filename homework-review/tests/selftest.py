@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""selftest.py — one-command install verification for homework-error-review.
+"""selftest.py — one-command install verification for homework-review.
 
 Verifies, on any platform (Windows: python/py; macOS/Linux: python3):
   1. Python dependencies present (pillow, pillow-heif; pymupdf optional)
@@ -28,7 +28,7 @@ def check(name, ok, hint=""):
 
 
 def main():
-    print("homework-error-review self-test")
+    print("homework-review self-test")
     print("== 1. Python dependencies ==")
     for mod, hint in (("PIL", "pip install pillow"),
                       ("pillow_heif", "pip install pillow-heif")):

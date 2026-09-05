@@ -1,8 +1,20 @@
 # Changelog
 
+## v1.2.0 — 2026-09-05
+
+### homework-review (renamed from homework-error-review)
+
+- **Global rename** `homework-error-review` → `homework-review`: skill directory,
+  SKILL.md `name` field, all docs/scripts references, and the distribution zip.
+- **Memory file moved**: `~/.homework-error-review/memory.md` →
+  `~/.homework-review/memory.md` (existing profile migrated); environment override
+  renamed `HER_MEMORY` → `HR_MEMORY`.
+- Selftest re-run 7/7 from the renamed tree; installed copy re-synced under the
+  new name (old `~/.agents/skills/homework-error-review/` removed).
+
 ## v1.1.1 — 2026-09-05
 
-### homework-error-review
+### homework-review
 
 - **Archive rule** (Phase 6): every delivered PDF + HTML source is archived into
   `~/homework-review/YYYY-MM-DD-<subject>/` — together with the memory file this
@@ -11,7 +23,7 @@
 
 ## v1.1.0 — 2026-09-05
 
-### homework-error-review
+### homework-review
 
 - **Subject confirmation gate** (Phase 0): declare subject/textbook/grade with
   evidence from one page before full analysis; halt on mismatch with the user's
@@ -29,7 +41,7 @@
 
 ## v1.0.0 — 2026-09-05
 
-### homework-error-review
+### homework-review
 
 - Initial release: 6-phase workflow (image ingestion → anti-hallucination error
   identification → knowledge extraction → booklet generation → PDF QA → delivery),

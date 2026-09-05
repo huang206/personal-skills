@@ -8,8 +8,8 @@ booklet content based on memory unless the user explicitly asks for review/histo
 
 ## Location
 
-- Default: `~/.homework-error-review/memory.md` (survives skill upgrades/reinstalls)
-- Override: environment variable `HER_MEMORY=/path/to/file.md`
+- Default: `~/.homework-review/memory.md` (survives skill upgrades/reinstalls)
+- Override: environment variable `HR_MEMORY=/path/to/file.md`
 - Auto-created with the template below on first use. Never delete or truncate it;
   only append sessions and update table rows.
 
@@ -17,7 +17,7 @@ booklet content based on memory unless the user explicitly asks for review/histo
 
 ```markdown
 # Learning Profile — 学习档案
-Maintained automatically by homework-error-review. Last updated: YYYY-MM-DD.
+Maintained automatically by homework-review. Last updated: YYYY-MM-DD.
 
 ## Mastery Overview — 知识点掌握总表
 
