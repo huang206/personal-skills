@@ -98,6 +98,12 @@ python3 tests/selftest.py          # verify: deps, fonts, renderer, full build +
   CURRENT homework only — no review items, no trend notes, unless you explicitly
   ask ("加历史回顾", "复习之前的", "make a review sheet").
 
+## Archive (delivered booklets)
+
+Every generated PDF (with its editable HTML source) is archived by the skill into
+`~/homework-review/YYYY-MM-DD-<subject>/` (e.g. `~/homework-review/2026-09-05-math/`).
+Together with the memory file this forms the child's complete learning record.
+
 ## Key hard-won behaviors encoded in this skill
 
 1. **Anti-hallucination transcription**: vision models silently auto-correct

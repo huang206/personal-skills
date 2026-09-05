@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.1.1 — 2026-09-05
+
+### homework-error-review
+
+- **Archive rule** (Phase 6): every delivered PDF + HTML source is archived into
+  `~/homework-review/YYYY-MM-DD-<subject>/` — together with the memory file this
+  forms the child's complete learning record. Existing booklets retroactively
+  archived (2026-09-01-math … 2026-09-05-math).
+
 ## v1.1.0 — 2026-09-05
 
 ### homework-error-review

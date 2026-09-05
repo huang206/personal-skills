@@ -172,7 +172,13 @@ fonts to `assets/fonts/`, checks deps, prints per-OS install hints).
 Optional final check: render pages to PNG (`check_pdf.py booklet.pdf --pngs previews`)
 and eyeball page 1–2 for layout collisions if the harness has vision.
 
-### Phase 6 — Deliver & remember
+### Phase 6 — Deliver, archive & remember
+
+**Archive the deliverables** after the QA gate passes: move (or copy) the PDF and
+its HTML source into `~/homework-review/YYYY-MM-DD-<subject>/` (create the folder
+if needed; date = session date, subject = `math` / `language-arts` / etc.; multiple
+booklets from the same day share the folder). This is the child's learning
+record — report the archive path to the user as the primary PDF location.
 
 **Update the memory file BEFORE reporting to the user** (protocol:
 `references/memory-protocol.md`): append the session log entry — including the
