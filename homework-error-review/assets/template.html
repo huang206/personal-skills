@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!--
+  homework-error-review · booklet template
+  ────────────────────────────────────────
+  Copy this file, then replace the sample content section by section.
+  Page order: cover → 1 How You Did → 2 Big Idea → 3+ Fixes (one .fix per wrong
+  question) → checklist page → practice pages (Parts A–D) → PARENT PAGE (Chinese) →
+  ANSWER KEY (always the last page).
+  Chunking: one <div class="page"> ≈ one printed page, target 40–100% fill.
+  See references/layout-rules.md before moving page boundaries.
+  Subject add-ons (math steps / digit boxes / LA drill) are in the CSS below, plus an
+  SVG number-line example at the bottom of this file — copy it when needed.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title><!-- booklet title, e.g. "My Multiplication Review" --></title>
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  * { box-sizing: border-box; }
+  body {
+    /* "NotoSansSC-Local" is injected by scripts/make_pdf.py as base64 @font-face
+       (works on Windows/macOS/Linux with zero OS font installation). The fallbacks
+       cover machines without the bundled fonts: YaHei (Windows), PingFang (macOS),
+       Noto/DejaVu (Linux). */
+    font-family: "NotoSansSC-Local", "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "DejaVu Sans", sans-serif;
+    color: #1a1c1d;
+    font-size: 11pt;
+    line-height: 1.72;
+  }
+  .page { padding: 13mm 16mm 14mm; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* ── Cover ── */
+  .cover {
+    display: flex; flex-direction: column;
+    height: 296mm; padding: 22mm 20mm 16mm;
+    page-break-after: always;
+  }
+  .cover .toprow { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 26mm; }
+  .cover .kicker {
+    font-size: 10.5pt; letter-spacing: 3px; color: #6d7378;
+    border-left: 4px solid #3f32d0; padding-left: 10px; line-height: 1.7;
+  }
+  .cover .year-mark { font-size: 24pt; font-weight: 900; color: #eef0f4; line-height: 1; }
+  .cover .hero {
+    font-size: 37pt; font-weight: 900; color: #3f32d0;
+    line-height: 1.24; margin: 0 0 10mm 0; letter-spacing: 1px;
+  }
+  .cover .rule { width: 34mm; height: 2.4mm; background: #3f32d0; margin-bottom: 11mm; }
+  .cover .summary {
+    font-size: 12pt; color: #3c4247; line-height: 1.95;
+    max-width: 140mm; margin-bottom: 14mm;
+  }
+  .cover .meta {
+    font-size: 9.5pt; color: #6d7378; line-height: 1.9;
+    border-top: 1px solid #dce1e5; padding-top: 6mm; max-width: 155mm;
+  }
+  .cover .footer {
+    margin-top: auto; padding-top: 6mm;
+    display: flex; justify-content: space-between;
+    font-size: 8.5pt; letter-spacing: 2px; color: #6d7378;
+    border-top: 1px solid #dce1e5;
+  }
+
+  /* ── Body ── */
+  h1 {
+    font-size: 16pt; color: #3f32d0; font-weight: 900;
+    border-bottom: 2px solid #3f32d0; padding-bottom: 5px;
+    margin: 6mm 0 3.5mm; page-break-after: avoid;
+  }
+  .page > h1:first-child { margin-top: 0; }
+  h2 { font-size: 12.5pt; color: #1a1c1d; font-weight: 900; margin: 5mm 0 2.5mm; page-break-after: avoid; }
+  p { margin: 0 0 2.6mm; text-align: justify; }
+  .note { font-size: 9pt; color: #6d7378; line-height: 1.6; margin: 2mm 0; }
+  .label { color: #3f32d0; font-weight: 900; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+
+  table { border-collapse: collapse; width: 100%; margin: 3mm 0; page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  th {
+    background: #3f32d0; color: #ffffff; font-weight: 700;
+    font-size: 9.8pt; padding: 5px 8px; border: 1px solid #ffffff;
+    text-align: center; line-height: 1.5;
+  }
+  td {
+    font-size: 9.6pt; padding: 5px 8px; border: 1px solid #ffffff;
+    line-height: 1.55; vertical-align: middle;
+  }
+  td.left { text-align: left; }
+  td.c { text-align: center; font-weight: 700; }
+  tbody tr:nth-child(odd) td { background: #f3f4f5; }
+  tbody tr:nth-child(even) td { background: #ffffff; }
+
+  .stats { display: flex; gap: 5mm; margin: 3mm 0 4mm; page-break-inside: avoid; }
+  .stat {
+    flex: 1; border: 1px solid #3f32d0; background: #f7f7fc;
+    text-align: center; padding: 9px 4px;
+  }
+  .stat .num { font-size: 16pt; font-weight: 900; color: #3f32d0; line-height: 1.4; }
+  .stat .lab { font-size: 8.8pt; color: #6d7378; }
+
+  .qbox {
+    background: #f3f4f5; border-left: 3.5px solid #3f32d0;
+    padding: 8px 14px; margin: 2mm 0 3mm; page-break-inside: avoid;
+  }
+  .qbox .stem { font-size: 10.5pt; margin: 0 0 1mm; line-height: 1.65; font-weight: 500; }
+  .tip {
+    background: #f3f4f5; border-left: 3.5px solid #3f32d0;
+    padding: 7px 12px; font-size: 10.3pt; margin: 2.5mm 0; page-break-inside: avoid;
+  }
+  .fix { page-break-inside: avoid; margin-bottom: 4mm; }
+  .say { font-style: italic; color: #3c4247; }
+  .q { margin: 0 0 4.2mm; page-break-inside: avoid; }
+  .q .stem { font-weight: 500; margin: 0 0 1.2mm; }
+  .q .opts { color: #3c4247; margin: 0 0 0 8mm; line-height: 1.85; }
+  .q .opts.two-col { columns: 2; column-gap: 10mm; }
+  .q .part { margin: 1.5mm 0 1.5mm 8mm; }
+  .q .part .plabel { font-weight: 700; }
+  .blank { display: inline-block; min-width: 44mm; border-bottom: 1px dashed #b9bec3; }
+  .star { color: #3f32d0; font-weight: 900; }
+  .hint { font-size: 8.8pt; color: #9aa0a6; margin-left: 8mm; }
+
+  /* ── Subject add-on: math worked steps ── */
+  .steps { margin: 1.5mm 0 1mm 6mm; line-height: 2.0; font-weight: 700; color: #1a1c1d; }
+  .steps .red { color: #3f32d0; }
+  .coladd { font-family: "DejaVu Sans Mono", "Consolas", "Menlo", monospace; font-size: 11pt; letter-spacing: 1px; }
+
+  /* ── Subject add-on: digit boxes (place value) ── */
+  .digits { margin: 1.5mm 0 1mm 6mm; line-height: 2.4; }
+  .dg {
+    display: inline-block; width: 8.5mm; text-align: center;
+    border: 1.5px solid #b9bec3; border-radius: 3px; margin-right: 2.5px;
+    font-weight: 700; font-size: 11pt; line-height: 1.7;
+  }
+  .dg.keep { border-color: #3f32d0; border-bottom: 4px solid #3f32d0; background: #f7f7fc; }
+  .dg.look { border-color: #3f32d0; border-radius: 12px; background: #eceafb; }
+  .legend { font-size: 8.8pt; color: #6d7378; margin-left: 6mm; }
+
+  /* ── Subject add-on: boxed worked examples / inline drills (LA) ── */
+  .drill {
+    background: #f7f8fa; border: 1px solid #dce1e5;
+    padding: 9px 14px; margin: 2mm 0; font-size: 10.2pt;
+    page-break-inside: avoid; line-height: 1.85;
+  }
+  .example {
+    background: #f7f8fa; border: 1px solid #dce1e5;
+    padding: 9px 14px; margin: 2.5mm 0; page-break-inside: avoid; line-height: 1.8;
+  }
+  .example .ex-title { font-weight: 900; color: #3f32d0; }
+
+  /* ── Figures (inline SVG only — no external images) ── */
+  figure { margin: 3mm 0; page-break-inside: avoid; text-align: center; }
+  figure svg { width: 96%; height: auto; }
+  figcaption { font-size: 8.8pt; color: #6d7378; margin-top: 1mm; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ COVER ═══════════
+     kicker: series label, 2 lines (subject · focus). year-mark: 4-digit year, ghost style.
+     hero: 2-line title with <br>. summary: 3–5 lines, open with good news.
+     meta: skill focus + date. footer: two short ALL-CAPS labels. -->
+<div class="cover">
+  <div class="toprow">
+    <div class="kicker">SUBJECT · LEVEL<br>UNIT NAME · SPECIAL FOCUS</div>
+    <div class="year-mark">2026</div>
+  </div>
+  <div class="hero">My Something<br>Review</div>
+  <div class="rule"></div>
+  <div class="summary">
+    Great news first: <b>what the child did well</b>. The N misses all share one
+    root cause: <b>the pattern in one phrase</b>. This book explains it, walks
+    through each missed question, and gives practice until it's automatic.
+    Answers are on the last page.
+  </div>
+  <div class="meta">
+    Skill focus: …<br>
+    Made from your graded homework pages · Month Year
+  </div>
+  <div class="footer"><span>REVIEW BOOK</span><span>SHORT MOTTO</span></div>
+</div>
+
+<!-- ═══════════ 1. HOW YOU DID ═══════════
+     praise paragraph (specific, from the what-went-right list) → 3 stat cards →
+     error overview table (one row per miss) → footnote. -->
+<div class="page">
+  <h1>1. How You Did</h1>
+  <p>First, the good news: … (name specific strengths) … Here's the pattern:
+     the multiplying was right, but the final answer was wrong. Both times, …</p>
+
+  <div class="stats">
+    <div class="stat"><div class="num">N</div><div class="lab">Problems to fix (all the same skill)</div></div>
+    <div class="stat"><div class="num">NN%</div><div class="lab">A strength, quantified</div></div>
+    <div class="stat"><div class="num">0</div><div class="lab">Another strength</div></div>
+  </div>
+
+  <h2>The Problems We'll Fix</h2>
+  <table>
+    <tr><th>Problem</th><th>You wrote</th><th>Correct</th><th>Where it slipped</th></tr>
+    <tr><td class="c">a × b</td><td class="c">wrong</td><td class="c">right</td><td class="left">one-phrase error pattern</td></tr>
+    <tr><td class="c">…</td><td class="c">…</td><td class="c">…</td><td class="left">…</td></tr>
+  </table>
+  <p class="note">Problems and answers are copied from your graded homework pages. If a number here looks different from your paper, trust the paper.</p>
+</div>
+
+<!-- ═══════════ 2. THE BIG IDEA ═══════════
+     one-sentence concept + central metaphor → concept/reference table →
+     closing .tip with the memorable chant or test. -->
+<div class="page">
+  <h1>2. The Big Idea: <Metaphor Name></h1>
+  <p>Explain the concept in one paragraph using the metaphor. …</p>
+  <table>
+    <tr><th>Sign / Case</th><th>What it means</th><th>Example</th></tr>
+    <tr><td class="c">…</td><td class="left">…</td><td class="left">…</td></tr>
+  </table>
+  <div class="tip"><b>The Say-It-Out-Loud Test.</b> … (the chant / decision test)</div>
+</div>
+
+<!-- ═══════════ 3. FIXES (repeat one .fix per wrong question; 2–3 per page) ═══════════ -->
+<div class="page">
+  <h1>3. Let's Fix Them, One by One</h1>
+
+  <div class="fix">
+    <h2>Fix 1 · <span class="say">wrong → right</span></h2>
+    <div class="qbox"><p class="stem">The original problem, verbatim.</p></div>
+    <div class="label">[What happened?]</div>
+    <p>What the child actually did and where it slipped, in their terms. …</p>
+    <div class="label">[How to do it]</div>
+    <p>The correct method step by step (use .steps/.coladd for arithmetic):
+      <span class="coladd">&nbsp;&nbsp;2 0 0<br>+&nbsp;&nbsp;&nbsp;3 2<br>───────<br>&nbsp;&nbsp;2 3 2</span>
+      …ending "… = ANSWER. ✔"</p>
+  </div>
+
+  <div class="fix">
+    <h2>Fix 2 · <span class="say">wrong → right</span></h2>
+    <div class="qbox"><p class="stem">…</p></div>
+    <div class="label">[What happened?]</div>
+    <p>…</p>
+    <div class="label">[How to do it]</div>
+    <p>… ✔</p>
+  </div>
+</div>
+
+<!-- ═══════════ 4. CHECKLIST / HABITS PAGE ═══════════
+     numbered habits table → "danger signs" table (when this step gets tricky) →
+     optional warm-up .q strip. -->
+<div class="page">
+  <h1>4. The Slow-Down Checklist</h1>
+  <p>One line framing: the fix is a habit, not more math. …</p>
+  <table>
+    <tr><th style="width:12%">Step</th><th>What to do</th></tr>
+    <tr><td class="c">1</td><td class="left"><b>Habit name.</b> What to do. …</td></tr>
+    <tr><td class="c">2</td><td class="left">…</td></tr>
+    <tr><td class="c">3</td><td class="left">…</td></tr>
+  </table>
+  <h2>Danger Signs: When This Step Gets Tricky</h2>
+  <table>
+    <tr><th style="width:34%">Danger sign</th><th>Example</th></tr>
+    <tr><td class="left">…</td><td class="left">…</td></tr>
+  </table>
+  <h2>Warm-Up</h2>
+  <div class="q">
+    <p class="stem">Quick items targeting only the weak step. …</p>
+  </div>
+</div>
+
+<!-- ═══════════ 5. YOUR TURN — PRACTICE (Parts A–D) ═══════════
+     Part A: direct analogs of the errors. Part B: the method in standard form.
+     Part C: word problems. Part D: ★ find-the-mistake (plant the child's own
+     error pattern). 10–12 items total, 5–8 per page. -->
+<div class="page">
+  <h1>5. Your Turn — 10 Problems</h1>
+  <p>How to use this page. No peeking at the last page!</p>
+
+  <h2>Part A · <subtitle></h2>
+  <div class="q">
+    <p class="stem">1. First problem … = ___</p>
+  </div>
+  <div class="q">
+    <p class="stem">2. Multiple choice example?</p>
+    <p class="opts">A. …&nbsp;&nbsp;&nbsp;B. …&nbsp;&nbsp;&nbsp;C. …&nbsp;&nbsp;&nbsp;D. …</p>
+  </div>
+
+  <h2>Part B · <subtitle></h2>
+  <div class="q">
+    <p class="stem">3. … </p>
+    <p class="part">Answer: <span class="blank"></span></p>
+    <p class="hint">Optional small hint.</p>
+  </div>
+
+  <h2>Part C · Word Problems</h2>
+  <div class="q">
+    <p class="stem">4. Word problem text …?</p>
+    <p class="part">Answer sentence: <span class="blank" style="min-width:100mm"></span></p>
+  </div>
+
+  <h2>Part D · Be the Teacher</h2>
+  <div class="q">
+    <p class="stem"><span class="star">★</span> 5. "Maya solved … = WRONG. Find her mistake and fix it."</p>
+    <p class="part">The mistake: <span class="blank" style="min-width:100mm"></span></p>
+  </div>
+</div>
+
+<!-- ═══════════ PARENT PAGE (Chinese; keep to ONE page) ═══════════
+     一句话总评 → 错题模式表 → 共性归纳 → 家庭辅导建议 3 条 → 使用建议。 -->
+<div class="page">
+  <h1>家长导读</h1>
+  <p>一句话总评：先说明做对了什么，再点出错题集中的知识点。…</p>
+  <table>
+    <tr><th>题目</th><th>孩子的答案</th><th>正确答案</th><th>错误模式</th></tr>
+    <tr><td class="c">…</td><td class="c">…</td><td class="c">…</td><td class="left">…</td></tr>
+  </table>
+  <h2>共性问题</h2>
+  <p>错误的根源是什么、为什么这类题容易错。…</p>
+  <h2>家庭辅导建议</h2>
+  <p><b>1.</b> 具体可操作的做法。…</p>
+  <p><b>2.</b> 练什么、怎么练。…</p>
+  <p><b>3.</b> 需要注意什么。…</p>
+  <p class="note">使用建议：先让孩子独立阅读并完成练习，再一起核对最后一页的答案。</p>
+</div>
+
+<!-- ═══════════ ANSWER KEY (ALWAYS THE LAST PAGE) ═══════════
+     One row per practice item: # | Answer | Why it's right (one line, chant when
+     possible). Close with the 3-tier encouraging rubric .tip. -->
+<div class="page">
+  <h1>Answer Key</h1>
+  <p class="note" style="margin:0 0 2mm">For checking after you finish. Read the "why" out loud — that's where the learning sticks!</p>
+  <table>
+    <tr><th style="width:8%">#</th><th style="width:20%">Answer</th><th>Why it's right</th></tr>
+    <tr><td class="c">1</td><td class="c">…</td><td class="left">…</td></tr>
+    <tr><td class="c">2</td><td class="c">…</td><td class="left">…</td></tr>
+  </table>
+  <div class="tip" style="margin-top:3mm"><b>How did it go?</b> Top tier: named mastery! Mid: strong, reread X once.
+  Lower: no problem — reread section N, redo the Fixes, try again tomorrow. You've got this!</div>
+</div>
+
+<!-- ═══════════ REFERENCE SNIPPET: inline SVG number line ═══════════
+     Copy-adapt for number-line / zone diagrams (rounding, comparing, fractions).
+     Keep fonts ≥12px in the viewBox, one idea per figure. Example shows a
+     "zone band" (all numbers from 5,500 to 6,499 round to 6,000):
+<figure>
+  <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
+    <rect x="190" y="28" width="240" height="64" fill="#eceafb"/>
+    <line x1="50" y1="78" x2="620" y2="78" stroke="#9aa0a6" stroke-width="2"/>
+    <line x1="70" y1="66" x2="70" y2="90" stroke="#1a1c1d" stroke-width="2.5"/>
+    <line x1="190" y1="66" x2="190" y2="90" stroke="#3f32d0" stroke-width="3"/>
+    <line x1="310" y1="66" x2="310" y2="90" stroke="#1a1c1d" stroke-width="2.5"/>
+    <line x1="430" y1="66" x2="430" y2="90" stroke="#3f32d0" stroke-width="3"/>
+    <line x1="550" y1="66" x2="550" y2="90" stroke="#1a1c1d" stroke-width="2.5"/>
+    <text x="70" y="108" font-size="14" text-anchor="middle" fill="#1a1c1d">5,000</text>
+    <text x="190" y="108" font-size="14" text-anchor="middle" fill="#3f32d0" font-weight="700">5,500</text>
+    <text x="310" y="108" font-size="15" text-anchor="middle" fill="#1a1c1d" font-weight="900">6,000</text>
+    <text x="430" y="108" font-size="14" text-anchor="middle" fill="#3f32d0" font-weight="700">6,500</text>
+    <text x="550" y="108" font-size="14" text-anchor="middle" fill="#1a1c1d">7,000</text>
+    <text x="310" y="46" font-size="14" text-anchor="middle" fill="#3f32d0" font-weight="700">ALL of these round to 6,000</text>
+    <text x="310" y="64" font-size="13" text-anchor="middle" fill="#3f32d0">5,500 up to 6,499</text>
+  </svg>
+  <figcaption>One-sentence caption.</figcaption>
+</figure>
+-->
+
+</body>
+</html>
