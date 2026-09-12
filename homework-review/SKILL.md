@@ -183,7 +183,9 @@ record — report the archive path to the user as the primary PDF location.
 **Update the memory file BEFORE reporting to the user** (protocol:
 `references/memory-protocol.md`): append the session log entry — including the
 "Practice items used" line with each item's key parameters (needed for future
-dedup) — and update the Mastery Overview rows for this session's knowledge points.
+dedup) — and update the Mastery Overview rows for this session's knowledge points
+(knowledge points are GROUPED BY SUBJECT, one `### <Subject>` sub-table per
+subject under `## Mastery Overview`; details in the protocol).
 Memory records only — it must not have influenced the booklet (dedup parameter
 swaps are the sole exception, per Phase 3 rule 5).
 

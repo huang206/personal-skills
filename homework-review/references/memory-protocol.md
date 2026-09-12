@@ -15,15 +15,28 @@ booklet content based on memory unless the user explicitly asks for review/histo
 
 ## File format
 
+Knowledge points are GROUPED BY SUBJECT: under `## Mastery Overview` there is one
+`### <Subject>` sub-table per subject (subject slugs match the Session Log's
+`· <subject> ·` field, e.g. `math`, `language-arts`, `science`). Each sub-table has
+NO Subject column — the heading carries it.
+
 ```markdown
 # Learning Profile — 学习档案
 Maintained automatically by homework-review. Last updated: YYYY-MM-DD.
 
-## Mastery Overview — 知识点掌握总表
+## Mastery Overview — 知识点掌握总表（按学科分组 · grouped by subject）
 
-| Knowledge point (双语) | Subject | First seen | Last seen | Status | Misses | Error pattern |
-|---|---|---|---|---|---|---|
-| Rounding to nearest thousand 四舍五入到千位 | math | 2026-09-01 | 2026-09-03 | improving | 3 | picks by leading digit; forgets to round up |
+### Math 数学
+
+| Knowledge point (双语) | First seen | Last seen | Status | Misses | Error pattern |
+|---|---|---|---|---|---|
+| Rounding to nearest thousand 四舍五入到千位 | 2026-09-01 | 2026-09-03 | improving | 3 | picks by leading digit; forgets to round up |
+
+### Language Arts 英语语法
+
+| Knowledge point (双语) | First seen | Last seen | Status | Misses | Error pattern |
+|---|---|---|---|---|---|
+| Conjunction logic 连词逻辑 (and/but/or/so/because) | 2026-09-04 | 2026-09-04 | new | 5 | so/because direction reversed |
 
 ## Session Log — 会话记录
 
@@ -51,10 +64,13 @@ Phase 2/3 analysis), or reusing a metaphor that worked before.
 At Phase 6, after the PDF is generated and passes QA, update the memory:
 
 1. **Append a session entry** to the Session Log (format above).
-2. **Update the Mastery Overview**, row per knowledge point involved THIS session:
-   - New point → add a row (`Status: new`, `Misses: 1`).
+2. **Update the Mastery Overview**, row per knowledge point involved THIS session.
+   Rows live under the matching `### <Subject>` sub-table (grouped by subject):
+   - New point → add a row (`Status: new`, `Misses: 1`) in the correct subject's
+     sub-table; if that subject has no sub-table yet, create one (`### Math 数学`,
+     `### Language Arts 英语语法`, …) under `## Mastery Overview`.
    - Existing point → update `Last seen`, increment `Misses` if the child erred
-     again, keep `First seen`.
+     again, keep `First seen`. Never move a point between subject sub-tables.
    - **Status transitions:** `new → improving` when the same point reappears with
      fewer/different errors or the user reports most practice items correct;
      `→ mastered` only when the user explicitly reports success (e.g., "做对了",

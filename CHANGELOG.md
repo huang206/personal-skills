@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.3.0 — 2026-09-12
+
+### homework-review
+
+- **Knowledge points grouped by subject** in the learning-profile memory
+  (`~/.homework-review/memory.md`): `## Mastery Overview` now holds one
+  `### <Subject>` sub-table per subject (`### Math 数学`, `### Language Arts
+  英语语法`, …; slugs match the Session Log's `· <subject> ·` field), and each
+  sub-table drops the redundant Subject column. Existing profile migrated
+  in place (16 math + 2 language-arts rows).
+- `references/memory-protocol.md`: format template and write rules updated —
+  new rows go under the matching subject sub-table, a new subject creates its
+  sub-table, points never move between subjects. SKILL.md Phase 6 points to
+  the grouping rule.
+
 ## v1.2.0 — 2026-09-05
 
 ### homework-review (renamed from homework-error-review)
