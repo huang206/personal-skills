@@ -24,6 +24,7 @@ homework-review/
 ├── README.md                # this file
 ├── references/
 │   ├── image-analysis.md    # two-pass transcription + anti-hallucination prompts
+│   ├── figures.md           # redraw source figures (arrays/jump lines/models) as inline SVG
 │   ├── content-design.md    # error grouping, metaphors, Fix anatomy, practice rules
 │   ├── memory-protocol.md   # learning-profile memory: format, read/write rules
 │   └── layout-rules.md      # pagination, fill targets, QA loop
@@ -118,6 +119,10 @@ Together with the memory file this forms the child's complete learning record.
 5. **Answer key always the last page**; parent summary (Chinese) just before it.
 6. **Memory records, never intervenes** — accumulation without unrequested
    personalization.
+7. **Figures follow the source** — pictured problems (arrays, jump number lines,
+   area models, comparison bars) are redrawn as inline SVG in their Fix and in
+   fresh-number practice analogs; drawn counts are Python-verified like arithmetic
+   (`references/figures.md`).
 
 ## License notes
 

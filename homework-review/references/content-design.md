@@ -57,6 +57,12 @@ Rules:
 - Every Fix must reference the metaphor at least once.
 - For arithmetic: show the vertical/step layout (`.steps`, `.coladd` classes) rather
   than describing it in prose. For grammar: show the corrected sentence in bold.
+- **If the original problem carried a figure, redraw it** right under the `.qbox`
+  (`references/figures.md`): same rows/columns, partitions, labels and endpoints
+  as the worksheet, simplified drawing style allowed. The figure is part of
+  "verbatim" — quoting an array problem as text alone changes the problem. The
+  [How to do it] steps may then point at parts of the figure ("the dashed line
+  splits 21 into 20 + 1").
 
 ## Practice design (Parts A–D)
 
@@ -76,6 +82,12 @@ Additional rules:
 - Every answer gets a one-line "why" in the answer key (the why is where learning
   sticks — write it as a chant or pattern name when possible).
 - Hints (small gray text) allowed on 2–3 items, never on Part D.
+- **Figure families propagate.** When the source error's problem had a figure
+  (array, jump number line, area model, comparison bars), its direct analog in
+  practice ships with a FRESH figure of the same family built from the new
+  numbers — counts verified in Python (`references/figures.md`). A ★
+  find-the-mistake variant may plant the child's error in the figure itself
+  (one jump missing, wrong cell value, bar with one unit too few).
 - **Verify every answer in Python before writing the key.** For distractor-based MC,
   verify that each distractor is actually wrong AND understand what wrong belief it
   catches (state it in the key when useful).

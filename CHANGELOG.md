@@ -1,5 +1,32 @@
 # Changelog
 
+## v1.4.0 — 2026-09-19
+
+### homework-review
+
+- **Figures follow the source** (new ground rule 6): when an original problem
+  carries a figure (coin/object arrays, jump number lines, area models,
+  comparison bars), the booklet now redraws it — in that problem's Fix block and
+  in fresh-number practice analogs of the same figure family. Quoting a pictured
+  problem as text alone quietly changes the question (a 7 × 21 penny array became
+  bare text in the 2026-09-18 booklet, which prompted this).
+- New `references/figures.md`: hard rules (structure must match the source,
+  counts Python-verified, inline SVG only, sizing), a which-figure-when table,
+  and copy-adapt snippets — Python generator for object arrays (dots/trees,
+  optional dashed distributive split with column braces), jump number line with
+  arrow markers, labeled area model, "n times as many" comparison bars.
+  Smoke-tested: all four families render clean in the PDF pipeline (147-coin
+  array, 8-jump line, 4-cell model, 5-unit bars, 5×14 tree array).
+- `references/image-analysis.md`: Pass 1 now transcribes figures (type,
+  dimensions, labels, partitions); interrogation questions demand COUNTING
+  figures; crops cover figure regions; Phase 2 output gains a figure inventory.
+- `references/content-design.md`: Fix blocks redraw their source figure under
+  the qbox; practice items in figure families ship with fresh figures;
+  find-the-mistake variants may plant the error in the figure.
+- `SKILL.md` (ground rule, Pass 1, Phase 4 bullet, files table),
+  `assets/template.html` (pointer comment), `README.md` (tree + behaviors)
+  updated to point at the library.
+
 ## v1.3.0 — 2026-09-12
 
 ### homework-review

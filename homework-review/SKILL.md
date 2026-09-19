@@ -40,6 +40,12 @@ The HTML→PDF template and scripts are bundled in this skill — no external pl
    but the memory must NEVER change booklet content on its own: do not add review
    items, trend notes, or any historical material unless the user explicitly asks
    for review/history.
+6. **Figures follow the source.** When an original problem carries a figure (coin
+   array, jump number line, area model, comparison bars), the booklet redraws it:
+   in the Fix for that problem AND in its practice analogs (fresh numbers, fresh
+   figure of the same family). Quoting a pictured problem as text alone quietly
+   changes the question. Drawing rules + copy-adapt SVG snippets:
+   `references/figures.md`; drawn counts are verified like arithmetic (rule 1).
 
 ## Workflow
 
@@ -85,6 +91,9 @@ Work page by page. Two passes minimum:
 **Pass 1 (inventory).** For each page, transcribe: exercise directions, every question
 number and text, the student's handwritten answer/work, and every teacher mark
 (✓ / ✗ / circle / correction / deducted points). Record which items show error marks.
+Also inventory every printed FIGURE (type, exact dimensions like rows × columns,
+labels, partition lines) — figures are transcribed like text and redrawn in the
+booklet (`references/figures.md`).
 
 **Pass 2 (anti-hallucination re-read) — mandatory for every item with an error mark
 and every item you're not 100% sure of.** Re-read using the character-by-character
@@ -148,6 +157,9 @@ the layout clean are in `references/layout-rules.md`; the ones that bite most of
   40–100% per page).
 - No em-dash (—) at a line start: prefer colons/commas mid-sentence.
 - Keep `page-break-inside: avoid` on `.q`, `.fix`, `.tip`, `.stats`, `tr` (already in CSS).
+- Redraw every source figure with the snippets in `references/figures.md` (inline
+  SVG, generator for arrays; same structure as the worksheet; fresh numbers for
+  practice analogs; counts re-verified in Python).
 
 ### Phase 5 — Render & QA loop
 
@@ -205,6 +217,7 @@ offer the targeted variant worksheet for whatever was missed.
 | Path | Purpose |
 |---|---|
 | `references/image-analysis.md` | Vision transcription protocol + anti-hallucination prompt templates. Read before Phase 2. |
+| `references/figures.md` | Figure library: redraw source figures (arrays, jump number lines, area models, comparison bars) as inline SVG, with a Python array generator. Read with Phase 3/4 whenever any source problem has a picture. |
 | `references/content-design.md` | Error grouping, metaphor, Fix block anatomy, practice design, tone, verification. Read before Phase 3. |
 | `references/memory-protocol.md` | Learning-profile memory file: location, format, read/write rules, review-mode trigger. Read at Phase 0 and Phase 6. |
 | `references/layout-rules.md` | Pagination, fill, punctuation, QA loop details. Read when building/fixing HTML. |

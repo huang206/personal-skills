@@ -25,7 +25,11 @@ error identification:
 > Transcribe in detail: 1) the topic/skill of each exercise; 2) every question with
 > its number and exact numbers/text; 3) the student's handwritten work and answers;
 > 4) the teacher's red-pen marks (checks, X marks, circles, corrections) and WHICH
-> items were marked WRONG; 5) any visible score.
+> items were marked WRONG; 5) any visible score; 6) every printed FIGURE: its type
+> (object/coin array, jump number line, area model, comparison bars), exact
+> dimensions (rows × columns, endpoints, jump size/count), labels, and any
+> partition or dashed split lines — figures get redrawn in the booklet
+> (references/figures.md).
 
 Purpose of pass 1: build the page map (which questions exist, which have error
 marks, where uncertainty is). Record which items need pass 2.
@@ -53,6 +57,9 @@ Key interrogation questions to resolve per item:
 - Teacher's mark: is the X on the final answer, on an intermediate step, or on the
   estimate line? What did the teacher write next to it?
 - Word problems: read the answer SENTENCE too (unit words like "books" matter).
+- Figures: COUNT them, never estimate — how many rows and columns in the array?
+  How many jumps of what size? Which cell is circled or labeled? A miscounted
+  figure corrupts both the error analysis and the redrawn copy in the booklet.
 
 ## Pass 3 — full-resolution crops (when pass 1 and pass 2 disagree, or marks are fuzzy)
 
@@ -65,6 +72,10 @@ convert ORIGINAL.HEIC -crop 3024x800+0+650 -resize 1700x -quality 92 crop.jpg
 
 Crop guidance: take the question number plus ~4 lines of context. Don't crop so
 tight that the teacher's mark is clipped — the mark is part of the evidence.
+
+If the error involves a FIGURE (wrong jump count, wrong cell addressed, mislabeled
+bar, misread array), crop the figure itself and count its parts element by
+element — downscaled pages make 20-column arrays look like 15.
 
 ## Cross-checks (cheap, catches systematic misses)
 
@@ -110,6 +121,9 @@ The same protocol applies; "digits" becomes "words":
 
 1. Error table: `problem | student wrote | correct | error pattern (short phrase)`
 2. What-went-right list (for the encouragement opening)
-3. Confidence notes: any item where the reading remains uncertain → say so in the
+3. Figure inventory: which problems carry printed figures + their exact structure
+   (type, dimensions, labels, partitions) — feeds the redraws in
+   `references/figures.md`
+4. Confidence notes: any item where the reading remains uncertain → say so in the
    PDF's footnote ("copied from the graded pages; trust the paper if anything
    differs") and, if materially uncertain, to the user in the delivery message.
