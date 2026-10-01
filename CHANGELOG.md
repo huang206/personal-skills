@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.5.0 — 2026-10-01
+
+### homework-review
+
+- **Convert non-JPG/PNG photos locally, first** (Phase 1 rewritten): HEIC (or any
+  non-JPG/PNG format) arrives as a raw binary attachment no vision step digests;
+  convert to JPG locally BEFORE any analysis. First try the system converter
+  one-shot (`for f in *.HEIC; do heif-convert "$f" "${f%.HEIC}.jpg"; done`,
+  Ubuntu: `sudo apt install libheif-examples`), then — always, because it also
+  normalizes to long edge ≤2000px / quality 85 — the bundled
+  `convert_images.py`. Field-tested 2026-10-01.
+- **Codec fix documented**: `heif-convert` failing with `Unsupported codec` means
+  system libheif lacks the HEVC decoder; on Ubuntu the verified fix is
+  `sudo apt install libheif-plugin-libde265` (needs the user's password — ask
+  them to run it; the bundled Pillow converter covers the gap meanwhile).
+- **Vision fallback to visual-judge agents** (field-tested 2026-10-01): local
+  conversion ≠ viewable images. If Read returns only a CDN/text URL and the 4_5v
+  image MCP answers `1210` on every input (including known-good public URLs —
+  server-side dead), stop probing image tools and dispatch the Phase 2
+  transcription passes to `documents:visual-judge` / `pdf:visual-judge` agents,
+  whose Read renders JPG/PNG natively: normalized JPGs for pass 1, full-res
+  crops (Pillow from the ORIGINAL files) for pass 2. Phase 5's optional visual
+  check now names the same judge dispatch as the no-native-vision gate.
+
 ## v1.4.0 — 2026-09-19
 
 ### homework-review

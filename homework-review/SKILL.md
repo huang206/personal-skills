@@ -72,8 +72,23 @@ kid-facing workbook + one Chinese parent page + English answer key.
 
 ### Phase 1 — Image ingestion
 
-iPhone photos usually arrive as HEIC. Normalize every image (HEIC→JPG, long edge
-≤2000px, quality 85) with the bundled cross-platform converter (Windows: `python`,
+iPhone photos usually arrive as HEIC, and the harness passes HEIC (or any other
+non-JPG/PNG format) as raw binary attachments — no vision step digests them
+directly. Convert to JPG locally FIRST, before any analysis.
+
+**First try** the system converter, one shot per directory (Ubuntu:
+`sudo apt install libheif-examples`; field-tested command):
+
+```bash
+for f in *.HEIC; do heif-convert "$f" "${f%.HEIC}.jpg"; done
+```
+
+`heif-convert` may be missing, or fail with `Unsupported codec` (system libheif
+built without the HEVC decoder — seen in the field 2026-10-01). On Ubuntu the fix
+is `sudo apt install libheif-plugin-libde265` (verified 2026-10-01; needs the
+user's password — ask them to run it). Otherwise use — or
+anyway run afterwards, because it also normalizes every image to long edge
+≤2000px, quality 85 — the bundled cross-platform converter (Windows: `python`,
 macOS/Linux: `python3`):
 
 ```bash
@@ -82,7 +97,18 @@ python3 "$SKILL_DIR/scripts/convert_images.py" -o work <source-images...>
 
 It uses Pillow + pillow-heif (`pip install pillow pillow-heif`, prebuilt wheels on
 Windows/macOS/Linux) and falls back to ImageMagick if present. Photos already in
-JPG are simply resized.
+JPG are simply resized, so it also shrinks full-res `heif-convert` output.
+
+**Vision fallback (field-tested 2026-10-01):** a successful local conversion does
+NOT mean the assistant can see the pictures. If Read returns only a CDN/text URL
+instead of rendering the image, and the 4_5v image MCP answers
+`1210 图片输入格式/解析错误` on every input (including known-good public URLs —
+that failure is server-side), stop probing image tools: dispatch the Phase 2
+transcription passes to visual-judge agents (`documents:visual-judge` /
+`pdf:visual-judge`), whose Read renders JPG/PNG natively. Give them the normalized
+JPGs for pass 1; for pass 2 crop suspect regions from the ORIGINAL files at full
+resolution (Pillow if ImageMagick cannot decode HEIC) and hand the crops to
+another judge dispatch. The same agents double as the Phase 5 visual QA gate.
 
 ### Phase 2 — Error identification (THE critical phase)
 
@@ -182,7 +208,9 @@ First use on a machine: `python3 "$SKILL_DIR/scripts/setup_env.py"` (downloads
 fonts to `assets/fonts/`, checks deps, prints per-OS install hints).
 
 Optional final check: render pages to PNG (`check_pdf.py booklet.pdf --pngs previews`)
-and eyeball page 1–2 for layout collisions if the harness has vision.
+and eyeball page 1–2 for layout collisions if you have native vision; if not, or as
+the independent gate, dispatch ONE visual-judge agent over all page PNGs (see the
+vision fallback in Phase 1) for a per-page pass/fail.
 
 ### Phase 6 — Deliver, archive & remember
 
@@ -233,6 +261,9 @@ offer the targeted variant worksheet for whatever was missed.
 
 - Python 3.9+ with `pip install pillow pillow-heif pymupdf` (prebuilt wheels on all
   three platforms; pymupdf optional — QA degrades gracefully without it)
+- Optional fast HEIC→JPG: libheif's `heif-convert` (`sudo apt install
+  libheif-examples` on Ubuntu); when absent or codec-blocked the bundled
+  Pillow converter covers it — nothing to install
 - ONE renderer, auto-detected in this order:
   1. Node.js + playwright (`npm i -g playwright && npx playwright install chromium`)
   2. Any system Chromium browser — Chrome, Edge (preinstalled on Windows 10/11),
