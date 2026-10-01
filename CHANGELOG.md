@@ -1,5 +1,42 @@
 # Changelog
 
+## v1.5.1 — 2026-10-01
+
+### homework-review
+
+Adversarial review of v1.5.0 (11 findings, PASS-WITH-FIXES) applied — packaging
+fixes only; the vision-fallback core is unchanged:
+
+- **Label honesty**: the `heif-convert` one-liner now states its actual field
+  outcome (ran 2026-10-01, failed `Unsupported codec` on all files) instead of
+  the inverted "field-tested command" label; "verified" now scopes to what was
+  verified (decoder mechanism via locally extracted plugin — the system-wide
+  apt install was not yet run). Install hints are explicitly non-blocking
+  ("for next time; do not wait").
+- **Ambiguity fix**: the chain is explicit now — heif-convert (optional) →
+  bundled converter over its JPGs or the originals (never both) → later phases
+  and vision dispatches use only the normalized `work/` set; no double
+  conversion, one canonical page-image set.
+- **Crop recipes fixed where it matters**: Phase 2 "third look" and
+  `references/image-analysis.md` Pass 3 switch from ImageMagick `convert` to a
+  Pillow snippet — `convert` rides the same system libheif and fails on
+  HEVC-coded HEICs when the decoder plugin is missing, the exact field failure.
+- **Portability**: harness-specific names (4_5v, error 1210, visual-judge agent
+  types) demoted to "in ZCode:" examples inside a generic trigger and remedy
+  (delegate to any image-capable subagent; if none, ask the user to paste
+  inline or switch to a vision-capable model).
+- **Dispatch hygiene**: Phase 1 now instructs to EMBED the image-analysis.md
+  pass-1/pass-2 templates in every transcription dispatch (subagents cannot
+  read the skill folder).
+- **Wording**: glob hardened to `*.HEIC *.heic`; "built without the HEVC
+  decoder" corrected to "missing the HEVC decoder plugin"; the universal "no
+  vision step digests them directly" hedged to "treat any non-JPG/PNG input as
+  un-viewable until proven otherwise".
+- README "Key hard-won behaviors" gains item 8 (local-first ingestion + vision
+  fallback); Environment requirements now name the `libheif-plugin-libde265`
+  fix. Ordering of converters is unchanged (heif-convert first) per the
+  skill owner's preference.
+
 ## v1.5.0 — 2026-10-01
 
 ### homework-review

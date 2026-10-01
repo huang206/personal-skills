@@ -64,10 +64,20 @@ Key interrogation questions to resolve per item:
 ## Pass 3 — full-resolution crops (when pass 1 and pass 2 disagree, or marks are fuzzy)
 
 Downscaled 1500px pages make digits ambiguous. Crop the suspect band from the
-ORIGINAL image (usually 3024×4032) and analyze the crop:
+ORIGINAL image (usually 3024×4032) and analyze the crop. Use Pillow — ImageMagick
+`convert` also works ONLY if the system libheif carries the HEVC decoder plugin,
+which is exactly what was missing in the field (2026-10-01):
 
 ```bash
-convert ORIGINAL.HEIC -crop 3024x800+0+650 -resize 1700x -quality 92 crop.jpg
+python3 - <<'EOF'
+from PIL import Image
+import pillow_heif; pillow_heif.register_heif_opener()   # no-op for JPG sources
+im = Image.open("ORIGINAL.HEIC").convert("RGB")          # or the original JPG
+W, H = im.size
+c = im.crop((0, int(0.20 * H), W, int(0.40 * H)))        # example band: 20–40% of height
+c.thumbnail((1700, 1700))                                # long edge ≤ 1700px
+c.save("crop.jpg", quality=92)
+EOF
 ```
 
 Crop guidance: take the question number plus ~4 lines of context. Don't crop so

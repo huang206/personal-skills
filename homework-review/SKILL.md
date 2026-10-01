@@ -72,43 +72,57 @@ kid-facing workbook + one Chinese parent page + English answer key.
 
 ### Phase 1 — Image ingestion
 
-iPhone photos usually arrive as HEIC, and the harness passes HEIC (or any other
-non-JPG/PNG format) as raw binary attachments — no vision step digests them
-directly. Convert to JPG locally FIRST, before any analysis.
+iPhone photos usually arrive as HEIC. Treat ANY non-JPG/PNG input as un-viewable
+until proven otherwise (harnesses pass such files as raw binary attachments) and
+convert to JPG locally FIRST, before any analysis.
 
-**First try** the system converter, one shot per directory (Ubuntu:
-`sudo apt install libheif-examples`; field-tested command):
+**First try** the system converter, one shot per directory — but never block the
+session on it: if the binary is missing or errors, fall through immediately (the
+bundled converter below needs zero installs). Ubuntu package, for next time:
+`sudo apt install libheif-examples`.
 
 ```bash
-for f in *.HEIC; do heif-convert "$f" "${f%.HEIC}.jpg"; done
+for f in *.HEIC *.heic; do heif-convert "$f" "${f%.*}.jpg"; done
 ```
 
-`heif-convert` may be missing, or fail with `Unsupported codec` (system libheif
-built without the HEVC decoder — seen in the field 2026-10-01). On Ubuntu the fix
-is `sudo apt install libheif-plugin-libde265` (verified 2026-10-01; needs the
-user's password — ask them to run it). Otherwise use — or
-anyway run afterwards, because it also normalizes every image to long edge
-≤2000px, quality 85 — the bundled cross-platform converter (Windows: `python`,
-macOS/Linux: `python3`):
+This command ran in the field 2026-10-01 and failed on all files with
+`Unsupported codec` — system libheif missing the HEVC decoder plugin. The Ubuntu
+fix is `sudo apt install libheif-plugin-libde265` (decoder mechanism verified
+2026-10-01 via a locally extracted plugin; the system-wide install was not yet
+run and needs the user's password — suggest it for next time, do not wait).
+
+**Always finish with the bundled cross-platform converter** (Windows: `python`,
+macOS/Linux: `python3`) — it produces the canonical working set: long edge
+≤2000px, quality 85, in `work/`. It decodes HEIC itself (Pillow + pillow-heif,
+`pip install pillow pillow-heif`, prebuilt wheels on Windows/macOS/Linux), so it
+fully covers a heif-convert failure; feed it the heif-convert JPGs if they
+exist, otherwise the originals — never both:
 
 ```bash
 python3 "$SKILL_DIR/scripts/convert_images.py" -o work <source-images...>
 ```
 
-It uses Pillow + pillow-heif (`pip install pillow pillow-heif`, prebuilt wheels on
-Windows/macOS/Linux) and falls back to ImageMagick if present. Photos already in
-JPG are simply resized, so it also shrinks full-res `heif-convert` output.
+It falls back to ImageMagick if Pillow is unavailable. Photos already in JPG
+are simply resized, so full-res `heif-convert` output gets shrunk too. Every
+later phase (and every vision dispatch) uses the normalized files in `work/`
+only.
 
 **Vision fallback (field-tested 2026-10-01):** a successful local conversion does
 NOT mean the assistant can see the pictures. If Read returns only a CDN/text URL
-instead of rendering the image, and the 4_5v image MCP answers
-`1210 图片输入格式/解析错误` on every input (including known-good public URLs —
-that failure is server-side), stop probing image tools: dispatch the Phase 2
-transcription passes to visual-judge agents (`documents:visual-judge` /
-`pdf:visual-judge`), whose Read renders JPG/PNG natively. Give them the normalized
-JPGs for pass 1; for pass 2 crop suspect regions from the ORIGINAL files at full
-resolution (Pillow if ImageMagick cannot decode HEIC) and hand the crops to
-another judge dispatch. The same agents double as the Phase 5 visual QA gate.
+instead of rendering the image, and image-analysis MCP tools error on every
+input — including known-good public URLs, which proves the failure is
+server-side (in ZCode: the 4_5v tool answering `1210 图片输入格式/解析错误`) —
+stop probing image tools. Delegate the Phase 2 transcription passes to whichever
+subagent type in this harness can carry images in context (in ZCode:
+`documents:visual-judge` / `pdf:visual-judge`, whose Read renders JPG/PNG
+natively; with none available, ask the user to paste the images inline or switch
+to a vision-capable model). EMBED the pass-1/pass-2 prompt templates from
+`references/image-analysis.md` in each dispatch — subagents cannot read this
+skill folder. Pass 1 gets the normalized `work/` JPGs; for pass 2 crop suspect
+regions from the ORIGINAL files at full resolution with Pillow (ImageMagick's
+`convert` rides the same system libheif and fails on HEVC HEICs when the decoder
+plugin is missing) and hand the crops to another dispatch. The same agents
+double as the Phase 5 visual QA gate.
 
 ### Phase 2 — Error identification (THE critical phase)
 
@@ -129,7 +143,9 @@ actually wrote **202** (partial products 200 + 32 both correct — the final add
 slipped). Four such errors existed; pass 1 auto-corrected all four.
 
 **Third look if still uncertain:** crop the suspect region from the ORIGINAL image at
-full resolution (ImageMagick `convert source.heic -crop WxH+X+Y`), and analyze the
+full resolution with Pillow (snippet in `references/image-analysis.md`; do NOT use
+ImageMagick `convert` on HEIC — it rides the same system libheif that may lack the
+HEVC decoder), and analyze the
 crop. Cross-check against any error-analysis sheet the student filled in (e.g., a
 "Test Analysis" page with circled question numbers) and against the visible score
 (e.g., 22.5/28 implies 5.5 points lost — your error list must explain the deduction).
@@ -262,8 +278,9 @@ offer the targeted variant worksheet for whatever was missed.
 - Python 3.9+ with `pip install pillow pillow-heif pymupdf` (prebuilt wheels on all
   three platforms; pymupdf optional — QA degrades gracefully without it)
 - Optional fast HEIC→JPG: libheif's `heif-convert` (`sudo apt install
-  libheif-examples` on Ubuntu); when absent or codec-blocked the bundled
-  Pillow converter covers it — nothing to install
+  libheif-examples` on Ubuntu; if it errors `Unsupported codec`, the
+  `libheif-plugin-libde265` package adds the missing HEVC decoder); when absent
+  or codec-blocked the bundled Pillow converter covers it — nothing to install
 - ONE renderer, auto-detected in this order:
   1. Node.js + playwright (`npm i -g playwright && npx playwright install chromium`)
   2. Any system Chromium browser — Chrome, Edge (preinstalled on Windows 10/11),

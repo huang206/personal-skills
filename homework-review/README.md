@@ -123,6 +123,13 @@ Together with the memory file this forms the child's complete learning record.
    area models, comparison bars) are redrawn as inline SVG in their Fix and in
    fresh-number practice analogs; drawn counts are Python-verified like arithmetic
    (`references/figures.md`).
+8. **Local-first image ingestion + vision fallback** — non-JPG/PNG photos (HEIC…)
+   convert to JPG locally before any analysis (`heif-convert` quick path, bundled
+   Pillow converter as the always-run normalizer; `work/` is the only set later
+   phases touch). When the session model cannot view images, the two transcription
+   passes and the visual QA gate delegate to image-capable subagents with the
+   anti-hallucination templates embedded in each dispatch (field-tested
+   2026-10-01).
 
 ## License notes
 
